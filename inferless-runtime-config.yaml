@@ -5,3 +5,4 @@ build:
     - "torch==2.4.1"
     - "accelerate==0.34.2"
     - "diffusers==0.30.2"
+    - "huggingface-hub==0.25.2"
