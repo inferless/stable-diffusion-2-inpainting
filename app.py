@@ -1,3 +1,6 @@
+import os
+os.environ["HF_HUB_ENABLE_HF_TRANSFER"]='1'
+from huggingface_hub import snapshot_download
 import PIL
 import requests
 import torch
@@ -12,8 +15,10 @@ class InferlessPythonModel:
         return PIL.Image.open(BytesIO(response.content)).convert("RGB")
 
     def initialize(self):
+        model_id = "stabilityai/stable-diffusion-2-inpainting"
+        snapshot_download(repo_id=model_id,allow_patterns=["*.safetensors"])
         self.pipe = StableDiffusionInpaintPipeline.from_pretrained(
-            "stabilityai/stable-diffusion-2-inpainting",
+            model_id,
             torch_dtype=torch.float16
         ).to("cuda")
 
